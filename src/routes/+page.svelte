@@ -1,4 +1,5 @@
 <script>
+	import { onMount } from 'svelte';
 	// 料理名、画像URL、出前館のリンクを含むデータのリスト
 	let dishes = [
 		{
@@ -129,6 +130,11 @@
 		}
 	];
 
+
+	// onMountを使って初期表示時に料理を設定
+	onMount(() => {
+		selectedDish = getRandomDish();
+	});
 	// ランダムな料理名とその画像とURLを選ぶ関数
 	function getRandomDish() {
 		const randomIndex = Math.floor(Math.random() * dishes.length);
@@ -140,13 +146,13 @@
 
 	// ボタンをクリックした時に料理名と画像を更新
 	function updateDish() {
-		selectedDish = getRandomDish();
+		selectedDish = getRandomDish();s
 	}
 </script>
 
 <main>
 	<div class="container">
-		<h1>今日のランチは {selectedDish.name}</h1>
+		<h1>今日のランチは <span class="selectedDish_name">{selectedDish.name}</span></h1>
 		<div class="dish-image">
 			<img src={selectedDish.image} alt={selectedDish.name} />
 		</div>
@@ -158,83 +164,88 @@
 </main>
 
 <style>
-	main {
+		main {
 		display: flex;
 		justify-content: center;
 		align-items: center;
 		height: 100vh;
 		margin: 0;
-		background: radial-gradient(circle, #f9f9f9, #e0e0e0);
+		background: linear-gradient(135deg, #f8f9fa, #e0e7ff);
 		font-family: 'Arial', sans-serif;
 	}
 
+	/* コンテナのスタイル */
 	.container {
 		text-align: center;
 		background: #fff;
-		border-radius: 12px;
-		padding: 2rem;
-		box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
-		max-width: 500px;
+		border-radius: 20px;
+		padding: 2.5rem;
+		box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+		max-width: 600px;
 		width: 90%;
 	}
 
 	h1 {
-		font-size: 2rem;
-		margin-bottom: 1rem;
+		font-size: 2.5rem;
+		margin-bottom: 1.5rem;
 		color: #333;
 	}
 
+	/* 料理画像のスタイル */
 	.dish-image {
 		position: relative;
 		display: inline-block;
 		width: 100%;
 		max-width: 400px;
-		margin: 1rem 0;
-		border-radius: 12px;
+		margin: 1.5rem 0;
+		border-radius: 20px;
 		overflow: hidden;
-		box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+		box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
 	}
 
 	img {
 		width: 100%;
 		height: auto;
 		transition:
-			transform 0.3s ease,
-			box-shadow 0.3s ease;
+			transform 0.4s ease,
+			box-shadow 0.4s ease;
 	}
 
 	img:hover {
-		transform: scale(1.05);
-		box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+		transform: scale(1.08);
+		box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
 	}
 
+	/* リンクボタンのスタイル */
 	a.order-button {
 		display: inline-block;
-		margin-top: 1rem;
-		padding: 0.75rem 1.5rem;
-		font-size: 1.1rem;
+		margin-top: 1.5rem;
+		padding: 0.9rem 1.8rem;
+		font-size: 1.2rem;
 		color: #fff;
-		background-color: #ff6f61;
+		background: linear-gradient(45deg, #ff6b6b, #f06595);
 		text-decoration: none;
-		border-radius: 6px;
+		border-radius: 10px;
 		transition:
 			background-color 0.3s ease,
 			transform 0.3s ease;
 	}
 
 	a.order-button:hover {
-		background-color: #e55d50;
-		transform: translateY(-2px);
+		background: linear-gradient(45deg, #f06595, #d6336c);
+		transform: translateY(-3px);
+		box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 	}
 
+	/* 更新ボタンのスタイル */
 	button.update-button {
 		margin-top: 1rem;
-		padding: 0.75rem 1.5rem;
-		font-size: 1.1rem;
+		padding: 0.9rem 1.8rem;
+		font-size: 1.2rem;
 		cursor: pointer;
 		border: none;
-		border-radius: 6px;
-		background-color: #4a90e2;
+		border-radius: 10px;
+		background: linear-gradient(45deg, #4dabf7, #1c7ed6);
 		color: #fff;
 		transition:
 			background-color 0.3s ease,
@@ -242,7 +253,14 @@
 	}
 
 	button.update-button:hover {
-		background-color: #357abd;
-		transform: translateY(-2px);
+		background: linear-gradient(45deg, #1c7ed6, #1971c2);
+		transform: translateY(-3px);
+		box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+	}
+
+	.selectedDish_name {
+		color: #ff6b6b;
+		font-weight: bold;
+		font-size: 3rem;
 	}
 </style>
